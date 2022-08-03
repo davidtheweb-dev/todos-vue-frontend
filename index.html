@@ -6,22 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Dos</title>
     <link rel="stylesheet" href="styles/main.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="/scripts/app.js" defer></script>
   </head>
   <body>
     <header>
       <h1>To-Do Management</h1>
       <p>Manage your (daily) To-Dos with ease!</p>
     </header>
-    <main>
+    <main id="todos-app">
       <section id="todo-management">
-        <form>
+        <form @submit="saveTodo">
           <label for="text">To-Do text</label>
-          <input type="text" id="text" name="text" required />
+          <input type="text" id="text" v-model="enteredTodoText" required />
           <button>Save</button>
         </form>
       </section>
       <section id="todos">
-        <ul id="todos-list">
+        <p v-if="todos.length === 0">
+          New todos added yet - maybe start adding some?
+        </p>
+        <ul v-else id="todos-list">
+          <li v-for="todo in todos">
+            <p>{{ todo.text }}</p>
+            <div>
+              <button>Edit</button>
+              <button>Delete</button>
+            </div>
+          </li>
         </ul>
       </section>
     </main>
